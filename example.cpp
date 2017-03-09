@@ -14,10 +14,10 @@ public:
 		this->interval = 1000 / 60;		//60 FPS
 		this->window_handle = -1;
 	}
-	int window_handle, interval;
-	ivec2 size;
-	float window_aspect;
-} window;
+	int window_handle, interval; // DECLAR INTEGERS 
+	ivec2 size; // DECLARE 2 DIMENSION
+	float window_aspect; // DECLARE FLOAT
+} window; // CREATE CLASS WINDOW NAMED WINDOW
 
 //Invalidate the window handle when window is closed
 void CloseFunc() {
@@ -29,36 +29,36 @@ void ReshapeFunc(int w, int h) {
 		window.size = ivec2(w, h);
 		window.window_aspect = float(w) / float(h);
 	}
-	camera.SetViewport(0, 0, window.size.x, window.size.y);
+	camera.SetViewport(0, 0, window.size.x, window.size.y); // SET WINDOW
 }
 
 //Keyboard input for camera, also handles exit case
-void KeyboardFunc(unsigned char c, int x, int y) {
-	switch (c) {
-	case 'w':
-		camera.Move(FORWARD);
-		break;
-	case 'a':
-		camera.Move(LEFT);
-		break;
-	case 's':
-		camera.Move(BACK);
-		break;
-	case 'd':
-		camera.Move(RIGHT);
-		break;
-	case 'q':
-		camera.Move(DOWN);
-		break;
-	case 'e':
-		camera.Move(UP);
-		break;
-	case 'x':
-	case 27:
-		exit(0);
+void KeyboardFunc(unsigned char c, int x, int y) { // USE OPENGL FUNCTION KEYBOARDFUNC
+	switch (c) { // GO TO CASE OF WHICH KEY IS PRESSED
+	case 'w': // GO HERE IF LOWER CASE W IS PRESSED
+		camera.Move(FORWARD); // MOVE CAMERA FORWARD
+		break; // EXIT SWITCH
+	case 'a': //GO HERE IF LOWER CASE A IS PRESSED
+		camera.Move(LEFT); // MOVE CAMERA LEFT
+		break; // EXIT SWITCH
+	case 's': // GO HERE IF LOWER CASE S IS PRESSED
+		camera.Move(BACK); // MOVE CAMERA BACK
+		break; // EXIT SWITCH
+	case 'd': // GO HERE IF LOWER CASE D IS PRESSED
+		camera.Move(RIGHT); // MOVE CAMERA RIGHT
+		break; // EXIT SWITCH
+	case 'q': // GO HERE IF LOWER CASE Q IS PRESSED
+		camera.Move(DOWN); // MOVE CAMERA DOWN
+		break; // EXIT SWITCH
+	case 'e': // GO HERE IF LOWER CASE E IS PRESSED
+		camera.Move(UP); // MOVE CAMERA UP
+		break; // EXIT SWITCH
+	case 'x': // GO HERE IF LOWER CASE X IS PRESSED
+	case 27: // GO HERE IF ESCAPE KEY IS PRESSED
+		exit(0); // END PROGRAM
 		return;
-	default:
-		break;
+	default: // GO HERE IS A KEY NOT SPECIFIED IS PRESSED
+		break; // EXIT SWITCH
 	}
 }
 
@@ -74,10 +74,10 @@ void CallBackMotionFunc(int x, int y) {
 }
 //Draw a wire cube! (nothing fancy here)
 void DisplayFunc() {
-	glEnable(GL_CULL_FACE);
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glEnable(GL_CULL_FACE); // REMOVE BACK POLYGONS 
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // SET CLEAR COLOR
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glViewport(0, 0, window.size.x, window.size.y);
+	glViewport(0, 0, window.size.x, window.size.y); // SET VIEWPORT
 
 	glm::mat4 model, view, projection;
 	camera.Update();
