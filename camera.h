@@ -5,15 +5,16 @@
  Quaternion camera code adapted from: http://hamelot.co.uk/visualization/opengl-camera/
  Written by Hammad Mazhar
  */
-#ifndef CAMERA_H
-#define CAMERA_H
+#ifndef CAMERA_H // CHECK IF CAMERA_H IS NOT DEFINED
+#define CAMERA_H // DEFINE CAMERA_H IF CAMERA_H IS NOT DEFINE 
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
+#ifdef __APPLE__ // IF USING AN APPLE COMPUTER
+#include <GLUT/glut.h> // INCLUDE GLUT/GLUT.H FILE FOR APPLE COMPUTERS
 #else
-#include <GL/freeglut.h>
+#include <GL/freeglut.h> // IF NOT APPLE INCLUDE THE GL/FREEGLUT.H FILE
 #endif
 
+// INCLUDE VARIOUS HPP HEADER FILES
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -21,11 +22,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+// CREATE ENUMERATED TYPES
 enum CameraType {
-	ORTHO, FREE
+	ORTHO, FREE // MAKE TWO CAMERATYPES FOR ORTHOGNOAL VIEWING AND FREE MOVING CAMERA
 };
 enum CameraDirection {
-	UP, DOWN, LEFT, RIGHT, FORWARD, BACK
+	UP, DOWN, LEFT, RIGHT, FORWARD, BACK // CREATE 6 DIRECTIONS OF MOVEMENT FOR THE CAMERA
 };
 
 class Camera {
@@ -75,25 +77,31 @@ class Camera {
 
 		CameraType camera_mode;
 
+		// DECLARE VARIABLES
+		//INTEGER VARIABLES
 		int viewport_x;
 		int viewport_y;
 
 		int window_width;
 		int window_height;
 
+		// DOUBLE VARIABLES
 		double aspect;
 		double field_of_view;
 		double near_clip;
 		double far_clip;
-
+		
+		// FLOATING POINT VARIABLES
 		float camera_scale;
 		float camera_heading;
 		float camera_pitch;
 
 		float max_pitch_rate;
 		float max_heading_rate;
+		//BOOLEAN VARIABLES
 		bool move_camera;
 
+		//3 DIMENSIONAL VECTORS
 		glm::vec3 camera_position;
 		glm::vec3 camera_position_delta;
 		glm::vec3 camera_look_at;
@@ -102,6 +110,7 @@ class Camera {
 		glm::vec3 camera_up;
 		glm::vec3 mouse_position;
 
+		//4 DIMENSIONAL VECTORS
 		glm::mat4 projection;
 		glm::mat4 view;
 		glm::mat4 model;
