@@ -98,6 +98,7 @@ void TimerFunc(int value) {
 
 int main(int argc, char * argv[]) {
 		//glut boilerplate
+		// INITIALIZE GLUT WINDOW
 		glutInit(&argc, argv);
 		glutInitWindowSize(1024, 512);
 		glutInitWindowPosition(0, 0);
@@ -106,12 +107,12 @@ int main(int argc, char * argv[]) {
 		window.window_handle = glutCreateWindow("MODERN_GL_CAMERA");
 		glutReshapeFunc(ReshapeFunc);
 		glutDisplayFunc(DisplayFunc);
-		glutKeyboardFunc(KeyboardFunc);
-		glutSpecialFunc(SpecialFunc);
-		glutMouseFunc(CallBackMouseFunc);
-		glutMotionFunc(CallBackMotionFunc);
-		glutPassiveMotionFunc(CallBackPassiveFunc);
-		glutTimerFunc(window.interval, TimerFunc, 0);
+		glutKeyboardFunc(KeyboardFunc); // SETUP KEYBOARD FUNCTION
+		glutSpecialFunc(SpecialFunc); // SETUP ARROWKEY FUNCTION
+		glutMouseFunc(CallBackMouseFunc); // SETUP MOUSE CLICKING FUNCTION
+		glutMotionFunc(CallBackMotionFunc); // SETUP MOUSE MOTION W/ CLICKING FUNCTION
+		glutPassiveMotionFunc(CallBackPassiveFunc); // SETUP MOUSE MOTION FUNCTION
+		glutTimerFunc(window.interval, TimerFunc, 0); // SETUP TIMER FUCNTION
 
 		glewExperimental = GL_TRUE;
 
@@ -120,11 +121,11 @@ int main(int argc, char * argv[]) {
 			return 0;
 		}
 		//Setup camera
-		camera.SetMode(FREE);
-		camera.SetPosition(glm::vec3(0, 0, -1));
-		camera.SetLookAt(glm::vec3(0, 0, 0));
+		camera.SetMode(FREE); // SET CAMERA MODE TO FREE
+		camera.SetPosition(glm::vec3(0, 0, -1)); // SET CAMERA AT POINT (0,0,-1) RIGHT BELOW ORIGION
+		camera.SetLookAt(glm::vec3(0, 0, 0)); // LOOK AT THE ORIGIN POINT
 		camera.SetClipping(.1, 1000);
-		camera.SetFOV(45);
+		camera.SetFOV(45); // SET FOV TO 45 DEGREES
 		//Start the glut loop!
 		glutMainLoop();
 return 0;
