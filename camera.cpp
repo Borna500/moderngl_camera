@@ -150,10 +150,10 @@ void Camera::ChangeHeading(float degrees) {
 		camera_heading += degrees;
 	}
 	//Check bounds for the camera heading
-	if (camera_heading > 360.0f) {
-		camera_heading -= 360.0f;
-	} else if (camera_heading < -360.0f) {
-		camera_heading += 360.0f;
+	if (camera_heading > 360.0f) { // CAMERA HEADING GOES OVER 360 DEGREES IN POSITIVE DIRECTION
+		camera_heading -= 360.0f; // ROTATE CAMERA HEADING NEGATIVE 360 DEGREES TO NORMALIZE CAMERA_HEADING VALUE
+	} else if (camera_heading < -360.0f) {  // CAMERA HEADING GOES OVER 360 DEGREES IN NEGATIVE DIRECTION
+		camera_heading += 360.0f; // ROTATE CAMERA POSITIVE 360 DEGREES TO NORMALIZE CAMERA_HEADING VALUE
 	}
 }
 void Camera::Move2D(int x, int y) {
@@ -181,19 +181,21 @@ void Camera::SetPos(int button, int state, int x, int y) {
 	mouse_position = glm::vec3(x, y, 0);
 }
 
+// GET FUNCTIONS
 CameraType Camera::GetMode() {
 	return camera_mode; //RETREIVE THE MODE THE CAMERA IS IN
 }
 
 void Camera::GetViewport(int &loc_x, int &loc_y, int &width, int &height) {
-	loc_x = viewport_x; 
-	loc_y = viewport_y;
-	width = window_width;
-	height = window_height;
+	loc_x = viewport_x; // RETREIVE AND CORRECT X VIEW  
+	loc_y = viewport_y; // RETREIVE AND CORRECT Y VIEW
+	width = window_width; // RETREIVE AND CORRECT WINDOW WIDTH
+	height = window_height; // RETREIVE AND CORRECT WINDOW HEIGHT
 }
 
+
 void Camera::GetMatricies(glm::mat4 &P, glm::mat4 &V, glm::mat4 &M) {
-	P = projection;
-	V = view;
-	M = model;
+	P = projection; // P becomes the projection matrix
+	V = view; // V BECOMES THE VIEW MATRIX
+	M = model; // M BECOMES THE MODEL MATRIX
 }
