@@ -3,22 +3,22 @@
 using namespace std;
 
 Camera::Camera() {
-	//initialize camera properties
-	camera_mode = FREE; //initialize camera to free mode
-	camera_up = glm::vec3(0, 1, 0);//initialize the up direction to up the y-axis
-	field_of_view = 45; //set field of view to 45
-	camera_position_delta = glm::vec3(0, 0, 0); //change in camera position is 0
+	//INITALIZE CAMERA PROPERTIES
+	camera_mode = FREE; //INITIALIZE CAMERA TO FREE MODE
+	camera_up = glm::vec3(0, 1, 0); // INITIALIZE THE UP DIRECTION TO UP THE Y-AXIS
+	field_of_view = 45; //SET FIELD OF VIEW TO 45
+	camera_position_delta = glm::vec3(0, 0, 0); // CHANGE IN CAMERA POSITION IS 0
 	camera_scale = .5f;
 	max_pitch_rate = 5;
 	max_heading_rate = 5;
-	move_camera = false; //set camera stationary
+	move_camera = false; // SET CAMERA STATIONARY
 }
 Camera::~Camera() {
 }
 
 void Camera::Reset() {
 	//reset camera
-	camera_up = glm::vec3(0, 1, 0); //set up direction to up the y-axis
+	camera_up = glm::vec3(0, 1, 0); //SET UP DIRECTION TO UP THE Y-AXIS
 }
 
 void Camera::Update() {
@@ -49,38 +49,38 @@ void Camera::Update() {
 		//set the look at to be infront of the camera
 		camera_look_at = camera_position + camera_direction * 1.0f;
 		//damping for smooth camera
-		camera_heading *= .5;
-		camera_pitch *= .5;
-		camera_position_delta = camera_position_delta * .8f;
+		camera_heading *= .5; // HALF THE CAMERA HEADING
+		camera_pitch *= .5; // HALF THE CAMERA PITCH
+		camera_position_delta = camera_position_delta * .8f; // DECREASE CAMERA POSITION BY 20%
 	}
 	//compute the MVP
-	view = glm::lookAt(camera_position, camera_look_at, camera_up); // set the view to the glutfunction lookAt
+	view = glm::lookAt(camera_position, camera_look_at, camera_up); // SET THE VIEW TO THE GLUTFUCNTION LOOKAT
 	model = glm::mat4(1.0f);
 	MVP = projection * view * model;
 }
 
 //Setting Functions
 void Camera::SetMode(CameraType cam_mode) {
-	//set camera mode
+	// SET CAMERA MODE
 	camera_mode = cam_mode;
-	camera_up = glm::vec3(0, 1, 0);  //set up direction to up the y-axis
+	camera_up = glm::vec3(0, 1, 0);  // SET UP DIRECTION TO UP THE Y-AXIS
 }
 
 void Camera::SetPosition(glm::vec3 pos) {
-	//set camera position
+	// SET CAMERA POSITION
 	camera_position = pos;
 }
 
 void Camera::SetLookAt(glm::vec3 pos) {
-	//set what camera looks at
+	// SET WHAT CAMERA LOOKS AT
 	camera_look_at = pos;
 }
 void Camera::SetFOV(double fov) {
-	//set field of view
+	// SET FIELD OF VIEW
 	field_of_view = fov;
 }
 void Camera::SetViewport(int loc_x, int loc_y, int width, int height) {
-	//set viewport
+	// SET VIEWPORT
 	viewport_x = loc_x;
 	viewport_y = loc_y;
 	window_width = width;
@@ -95,52 +95,52 @@ void Camera::SetClipping(double near_clip_distance, double far_clip_distance) {
 }
 
 //Move Function
-void Camera::Move(CameraDirection dir) { //move based on parameter
-	if (camera_mode == FREE) { // if camera can move
-		switch (dir) { //go to case of the parameter
-			case UP: //if dir is up start here
-				camera_position_delta += camera_up * camera_scale; //move camera up
-				break; //exit switch
-			case DOWN: //if dir is down start here
-				camera_position_delta -= camera_up * camera_scale; //move camera down
-				break;
-			case LEFT: //if dir is left start here
-				camera_position_delta -= glm::cross(camera_direction, camera_up) * camera_scale; //move camera left
-				break; //exit switch
-			case RIGHT: //if dir is right start here
-				camera_position_delta += glm::cross(camera_direction, camera_up) * camera_scale; //move camera right
-				break; //exit switch
-			case FORWARD: //if dir is forward start here
-				camera_position_delta += camera_direction * camera_scale; //move camera forward
-				break; //exit switch
-			case BACK: //if dir is back start here
-				camera_position_delta -= camera_direction * camera_scale; //move camera back
-				break; //exit switch
+void Camera::Move(CameraDirection dir) { // MOVE BASED ON PARAMETER
+	if (camera_mode == FREE) { // IF CAMERA CAN MOVE
+		switch (dir) { // GO TO CASE OF PARAMETER
+			case UP: // IF PARAMTER IS UP START HERE
+				camera_position_delta += camera_up * camera_scale; // MOVE CAMERA UP
+				break; // EXIT SWITCH
+			case DOWN: // IF PARAMTER IS DOWN START HERE
+				camera_position_delta -= camera_up * camera_scale; // MOVE CAMERA DOWN
+				break; // EXIT SWITCH
+			case LEFT: // IF PARAMTER IS LEFT START HERE
+				camera_position_delta -= glm::cross(camera_direction, camera_up) * camera_scale; // MOVE CAMERA LEFT
+				break; // EXIT SWITCH
+			case RIGHT: // IF PARAMTER IS RIGHT START HERE
+				camera_position_delta += glm::cross(camera_direction, camera_up) * camera_scale; // MOVE CAMERA RIGHT
+				break; // EXIT SWITCH
+			case FORWARD: // IF PARAMETER IS FORWARD START HERE
+				camera_position_delta += camera_direction * camera_scale; // MOVE CAMERA FORWARD
+				break; // EXIT SWITCH
+			case BACK: // IF PARAMTER IS BACK START HERE
+				camera_position_delta -= camera_direction * camera_scale; // MOVE CAMERA BACK
+				break; // EXIT SWITCH
 		}
 	}
 }
 void Camera::ChangePitch(float degrees) {
 	//Check bounds with the max pitch rate so that we aren't moving too fast
-	if (degrees < -max_pitch_rate) { //degrees moving too fast in negative direction
-		degrees = -max_pitch_rate; //change degrees to max value in negative direction
-	} else if (degrees > max_pitch_rate) { //degrees moving too fast in positive direction
-		degrees = max_pitch_rate; //change degrees to max value in positive direction
+	if (degrees < -max_pitch_rate) { // DEGREES MOVING TOO FAST IN NEGATIVE DIRECTION
+		degrees = -max_pitch_rate; // CHANGE DEGREES TO MAX VALUE IN NEGATIVE DIRECTION
+	} else if (degrees > max_pitch_rate) { // DEGEREES MOVING TOO FAST IN POSITIVE DIRECTION
+		degrees = max_pitch_rate; // CHANGE DEGREES TO MAX VALUE IN POSITIVE DIRECTION
 	}
-	camera_pitch += degrees; //change camera pitch
+	camera_pitch += degrees; // CHANGE CAMERA PITCH
 
 	//Check bounds for the camera pitch
-	if (camera_pitch > 360.0f) { // camera pitch goes over 360 degrees in one direction
-		camera_pitch -= 360.0f; //rotate camera 360 degrees to normalize camera_pitch value
-	} else if (camera_pitch < -360.0f) { // camera pitch goes over 360 degrees in one direction
-		camera_pitch += 360.0f; //rotate camera 360 degrees to normalize camera_pitch value
+	if (camera_pitch > 360.0f) { // CAMERA PITCH GOES OVER 360 DEGREES IN POSITIVE DIRECTION
+		camera_pitch -= 360.0f; // ROTATE CAMERA NEGATIVE 360 DEGREES TO NORMALIZE CAMERA_PITCH VALUE
+	} else if (camera_pitch < -360.0f) { // CAMERA PITCH GOES OVER 360 DEGREES IN NEGATIVE DIRECTION
+		camera_pitch += 360.0f; // ROTATE CAMERA POSITIVE 360 DEGREES TO NORMALIZE CAMERA_PITCH VALUE
 	}
 }
 void Camera::ChangeHeading(float degrees) {
 	//Check bounds with the max heading rate so that we aren't moving too fast
-	if (degrees < -max_heading_rate) { //degrees moving too fast in negative direction
-		degrees = -max_heading_rate; //change degrees to max value in negative direction
-	} else if (degrees > max_heading_rate) { //degrees moving too fast in positive direction
-		degrees = max_heading_rate; //change degrees to max value in positive direction
+	if (degrees < -max_heading_rate) { // DEGREES MOVING TOO FAST IN NEGATIVE DIRECTION
+		degrees = -max_heading_rate; // CHANGE DEGREES TO MAX VALUE IN NEGATIVE DIRECTION
+	} else if (degrees > max_heading_rate) { // DEGEREES MOVING TOO FAST IN POSITIVE DIRECTION
+		degrees = max_heading_rate; // CHANGE DEGREES TO MAX VALUE IN POSITIVE DIRECTION
 	}
 	//This controls how the heading is changed if the camera is pointed straight up or down
 	//The heading delta direction changes
@@ -160,29 +160,29 @@ void Camera::Move2D(int x, int y) {
 	//compute the mouse delta from the previous mouse position
 	glm::vec3 mouse_delta = mouse_position - glm::vec3(x, y, 0);
 	//if the camera is moving, meaning that the mouse was clicked and dragged, change the pitch and heading
-	if (move_camera) {
+	if (move_camera) { // CHECK IF MOVE_CAMERA IS TRUE
 		ChangeHeading(.08f * mouse_delta.x);
 		ChangePitch(.08f * mouse_delta.y);
 	}
-	mouse_position = glm::vec3(x, y, 0);
+	mouse_position = glm::vec3(x, y, 0); // SET MOUSE POSITION ON THE X-Y PLANE BASED ON PARAMETERS
 }
 
 void Camera::SetPos(int button, int state, int x, int y) {
-	//set camera position based on button
-	if (button == 3 && state == GLUT_DOWN) {
+	// SET CAMERA POSITION BASED ON BUTTON
+	if (button == 3 && state == GLUT_DOWN) { // SCROLL UP IS PRESSED DOWNW
 		camera_position_delta += camera_up * .05f;
-	} else if (button == 4 && state == GLUT_DOWN) {
+	} else if (button == 4 && state == GLUT_DOWN) { // SCROLL DOWN IS PRESSED DOWN
 		camera_position_delta -= camera_up * .05f;
-	} else if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) { //left mouse button is down
-		move_camera = true; // move camera
-	} else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) { //left mouse button is up
-		move_camera = false; // don't move camera
+	} else if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) { // LEFT MOUSE BUTTON IS DOWN
+		move_camera = true; // MOVE CAMERA
+	} else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) { // LEFT MOUSE BUTTON IS UP
+		move_camera = false; // DON'T MOVE CAMERA
 	}
 	mouse_position = glm::vec3(x, y, 0);
 }
 
 CameraType Camera::GetMode() {
-	return camera_mode; //retrieve the mode the camera is in
+	return camera_mode; //RETREIVE THE MODE THE CAMERA IS IN
 }
 
 void Camera::GetViewport(int &loc_x, int &loc_y, int &width, int &height) {
